@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <style>
+        td, th {
+            outline: 2px solid black;
+            margin: 10px;
+            text-align: center
+        }
+    </style>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>User name</th>
+            <th>User surname</th>
+            <th>User age</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <td>
+                <span th:text="${user.getName()}">Car name</span>
+            </td>
+            <td>
+                <span th:text="${user.getSurname()}">Car color</span>
+            </td>
+            <td>
+                <span th:text="${user.getAge()}">Car seats</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
