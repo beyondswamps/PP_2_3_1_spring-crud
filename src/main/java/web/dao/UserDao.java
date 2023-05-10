@@ -9,7 +9,7 @@ public interface UserDao {
 
     List<User> getUsers();
 
-    User getUser(Integer id);
+    User getUser(Long id);
 
 //    void deleteUser(Integer id);
 }

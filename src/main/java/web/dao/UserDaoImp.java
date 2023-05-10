@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 @Repository
+//@EnableTransactionManagement
 public class UserDaoImp implements UserDao {
 
     final private EntityManagerFactory emf;
@@ -20,20 +21,25 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
+//    @Transactional
     public void addUser(User user) {
-        emf.createEntityManager().persist(user);
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
+        em.close();
     }
 
     @Override
     public List<User> getUsers() {
-        EntityManager em = emf.createEntityManager();
-        return em.createQuery("from User", User.class).getResultList();
+        return emf
+                .createEntityManager()
+                .createQuery("from User", User.class)
+                .getResultList();
     }
 
     @Override
-    public User getUser(Integer id) {
-        EntityManager em = emf.createEntityManager();
-        User user = em.find(User.class, id);
-        return user;
+    public User getUser(Long id) {
+        return emf.createEntityManager().find(User.class, id);
     }
 }

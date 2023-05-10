@@ -24,17 +24,33 @@
         <tbody>
         <tr th:each="user: ${users}">
             <td>
-                <span th:text="${user.getName()}">Car name</span>
+                <span th:text="${user.getName()}">User name</span>
             </td>
             <td>
-                <span th:text="${user.getSurname()}">Car color</span>
+                <span th:text="${user.getSurname()}">User surname</span>
             </td>
             <td>
-                <span th:text="${user.getAge()}">Car seats</span>
+                <span th:text="${user.getAge()}">User age</span>
             </td>
         </tr>
         </tbody>
     </table>
+    <form th:action="@{/users}" method="post" th:object="${user}">
+        <div>
+            <label for="name">User name</label>
+            <input id="name" type="text" th:field="*{name}" required>
+        </div>
+        <div>
+            <label for="surname">User surname</label>
+            <input id="surname" type="text" th:field="*{surname}" required>
+        </div>
+        <div>
+            <label for="age">User age</label>
+            <input id="age" th:field="*{age}" required>
+        </div>
+        <input type="submit" value="Add user">
+
+    </form>
 </div>
 </body>
 </html>

@@ -1,16 +1,33 @@
 package web.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 import java.util.Objects;
+
 @Entity
+@Table(name = "Users")
+@Component
 public class User {
     @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "age")
     private Integer age;
 
+    public User(String name, String surname, Integer age) {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+    }
     public User(Long id, String name, String surname, Integer age) {
         this.id = id;
         this.name = name;
@@ -18,7 +35,8 @@ public class User {
         this.age = age;
     }
 
-    public User(){};
+    public User() {
+    }
 
     public Long getId() {
         return id;

@@ -8,6 +8,6 @@ public interface UserService {
 
     void addUser(User user);
 
-    User getUser(Integer id);
+    User getUser(Long id);
 
 }
