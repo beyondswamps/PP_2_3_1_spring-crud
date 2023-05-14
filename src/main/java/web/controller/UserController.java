@@ -8,28 +8,33 @@ import web.model.User;
 import web.service.UserService;
 
 @Controller
+@RequestMapping("/users")
 public class UserController {
+    final
     private UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/users")
-    public String listUsers(Model model, @RequestParam(name = "id", required = false) Long id, User user) {
-        if (id == null) {
-            model.addAttribute("users", userService.getUsers());
-        } else model.addAttribute("users", userService.getUser(id));
+    @GetMapping("/all")
+    public String listUsers(Model model, User user) {
+        model.addAttribute("users", userService.getUsers());
         model.addAttribute("user", user);
         return "users";
     }
 
-    @RequestMapping(method=RequestMethod.POST, value = "/users")
+    @PostMapping("/add")
     public String addUser(@ModelAttribute User user, Model model) {
-//        model.addAttribute("user", user);
+        model.addAttribute("user", user);
         userService.addUser(user);
+        return "redirect:/users/all";
+    }
 
-        return "redirect:/users";
+    @GetMapping(value="/delete")
+    public String deleteUser(@RequestParam Long id) {
+        userService.deleteUser(id);
+        return "redirect:/users/all";
     }
 
 

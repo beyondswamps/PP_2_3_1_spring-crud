@@ -6,37 +6,41 @@ import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class UserDaoImp implements UserDao {
 
-    final private EntityManagerFactory emf;
+    @PersistenceContext
+    final private EntityManager entityManager;
 
-    public UserDaoImp(EntityManagerFactory emf) {
-        this.emf = emf;
+    public UserDaoImp(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
     @Transactional
     public void addUser(User user) {
-        EntityManager em = emf.createEntityManager();
-//        em.getTransaction().begin();
-        em.persist(user);
-//        em.getTransaction().commit();
-//        em.close();
+        entityManager.persist(user);
     }
 
     @Override
     public List<User> getUsers() {
-        return emf
-                .createEntityManager()
+        return entityManager
                 .createQuery("from User", User.class)
                 .getResultList();
     }
 
     @Override
     public User getUser(Long id) {
-        return emf.createEntityManager().find(User.class, id);
+        return entityManager.find(User.class, id);
+    }
+
+    @Transactional
+    @Override
+    public void deleteUser(Long id) {
+        User user = entityManager.find(User.class, id);
+        entityManager.remove(user);
     }
 }
