@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -21,11 +20,6 @@ public class UserDaoImp implements UserDao {
 
     @Override
     @Transactional
-    public void addUser(User user) {
-        entityManager.persist(user);
-    }
-
-    @Override
     public List<User> getUsers() {
         return entityManager
                 .createQuery("from User", User.class)
@@ -33,8 +27,15 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
+    @Transactional
     public User getUser(Long id) {
         return entityManager.find(User.class, id);
+    }
+
+    @Override
+    @Transactional
+    public void addUser(User user) {
+        entityManager.persist(user);
     }
 
     @Transactional
@@ -42,5 +43,11 @@ public class UserDaoImp implements UserDao {
     public void deleteUser(Long id) {
         User user = entityManager.find(User.class, id);
         entityManager.remove(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateUser(User user) {
+        entityManager.merge(user);
     }
 }
