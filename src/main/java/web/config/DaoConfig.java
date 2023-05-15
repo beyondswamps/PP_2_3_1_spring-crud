@@ -2,12 +2,10 @@ package web.config;
 
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManager;
@@ -21,7 +19,7 @@ import java.util.Properties;
 @ComponentScan({"web.service", "web.dao"})
 public class DaoConfig {
 
-    private Environment env;
+    final private Environment env;
 
     public DaoConfig(Environment env) {
         this.env = env;
@@ -69,12 +67,4 @@ public class DaoConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
-
-//    @Bean
-//    public PlatformTransactionManager dataSourceTransactionManager() {
-//        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager(
-//                dataSource()
-//        );
-//        return  dataSourceTransactionManager;
-//    }
 }
