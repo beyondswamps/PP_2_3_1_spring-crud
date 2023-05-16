@@ -19,6 +19,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.Properties;
 
 @Configuration
@@ -83,8 +84,8 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public EntityManager entityManager() {
-        return entityManagerFactory().getObject().createEntityManager();
+    public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
+        return entityManagerFactory.createEntityManager();
     }
 
     @Bean
