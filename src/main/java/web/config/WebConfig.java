@@ -10,6 +10,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -28,7 +29,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:web.properties")
 public class WebConfig implements WebMvcConfigurer {
-    private final ApplicationContext applicationContext;
+    final private ApplicationContext applicationContext;
     final private Environment env;
 
     public WebConfig(ApplicationContext applicationContext, Environment env) {
@@ -89,7 +90,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public JpaTransactionManager transactionManager() {
+    public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
