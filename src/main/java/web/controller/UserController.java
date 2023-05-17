@@ -41,7 +41,6 @@ public class UserController {
         model.addAttribute("user", user);
         user.setId(id);
         userService.updateUser(user);
-
         return "redirect:/users/all";
     }
 
@@ -50,6 +49,4 @@ public class UserController {
         userService.deleteUser(id);
         return "redirect:/users/all";
     }
-
-
 }
